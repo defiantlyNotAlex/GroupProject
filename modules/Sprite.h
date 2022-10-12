@@ -3,16 +3,20 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+
 class Sprite {
     private:
         sf::CircleShape *body;
         sf::RectangleShape *HP_bar;
+        int position[2]; // x, y position of the sprite
         int level;
         int exp;
         int attack;
-        int HPcapcity;
+        int HPcapcity; // max HP of a character
         int HP;
     public:
+        // default constructor
         Sprite() {
             level = 1;
             attack = 10;
@@ -20,7 +24,18 @@ class Sprite {
             HP = 100;
             exp = 0;
         }
+        // constructor with customized level, attack, and HP capacity
+        Sprite(int lvl, int attack, int HPcapacity) {
+            level = lvl;
+            this->attack = attack;
+            this->HPcapcity = HPcapacity;
+
+            exp = 0;
+            HP = HPcapacity;
+        }
+        // dont care about it:)) until the end.
         void drawBody(int x, int y, sf::Color color) {
+            position[0], position[1] = x, y;
             body = new sf::CircleShape();
             body->setRadius(10);
             body->setPosition(x,y);
@@ -28,16 +43,29 @@ class Sprite {
             body->setOrigin(5,5);
 
             HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5));
-            HP_bar->setOutlineColor(sf::Color::White);
+            HP_bar->setFillColor(sf::Color::Green);
             HP_bar->setPosition(x-10,y-15);
         }
+        // render the image in window
         void draw(sf::RenderWindow *win) {
             win->draw(*body);
             win->draw(*HP_bar);
         }
         // fight function - need to add more attack effect
         void fight(Sprite *enemy) {
-            enemy->HPcapcity -= this->attack;
+            int *enemyPosition = enemy->getPosition();
+            enemy->HP -= this->attack;
+        }
+        // check if character is alive
+        bool isAlive() {
+            if (HP == 0) {
+                return false;
+            }
+            return true;
+        }
+        // get the x, y position of the character
+        int* getPosition() {
+            return position;
         }
         ~Sprite() {}
 };

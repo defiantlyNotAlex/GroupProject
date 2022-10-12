@@ -7,7 +7,7 @@ class Player: public Sprite {
     // private:
 
     public:
-        Player(int x, int y): Sprite() {
+        Player(int x, int y, int lvl, int attack, int HPcapacity): Sprite(lvl, attack, HPcapacity) {
             drawBody(x, y, sf::Color::Green);
         }
         ~Player() {}
