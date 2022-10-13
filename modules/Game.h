@@ -27,9 +27,9 @@ class Game {
 
             //Load and check the availability of the font file
 
-            buttons[0] = new AttackButton("Rock", 5, size-55);
-            buttons[1] = new AttackButton("Paper", 60, size-55);
-            buttons[2] = new AttackButton("Scissor", 115, size-55);
+            buttons[0] = new AttackButton(1, 5, size-55);
+            buttons[1] = new AttackButton(2, 60, size-55);
+            buttons[2] = new AttackButton(3, 115, size-55);
         }
         void run() {
             while (window->isOpen()) {
