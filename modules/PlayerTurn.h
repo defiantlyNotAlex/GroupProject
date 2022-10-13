@@ -2,7 +2,6 @@
 #define PLAYERTURN_H
 
 #include "Player.h"
-#include "Enemy.h"
 #include "Sprite.h"
 #include <iostream>
 
