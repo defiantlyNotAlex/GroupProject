@@ -66,7 +66,7 @@ class Sprite {
         }
         // check if character is alive
         bool isAlive() {
-            if (HP == 0) {
+            if (HP <= 0) {
                 return false;
             }
             return true;
@@ -78,7 +78,6 @@ class Sprite {
         // HP bar change according to current HP
         void changeHPBar(int currentHP) {
             float proportion = 1.0 * currentHP / HPcapcity;
-            std::cout << proportion << std::endl;
             this->HP_bar->setScale(proportion, 1);
         } 
         ~Sprite() {}
