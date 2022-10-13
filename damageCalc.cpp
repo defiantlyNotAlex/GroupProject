@@ -1,6 +1,6 @@
 int damageCalculator(int attackStat, int defenceStat, int type1, int type2)
 { // type 1 is defender type 2 is attacker
-    damageMultiplier = 1;
+    int damageMultiplier = 1;
         // TYPE DAMAGE
 
     switch (type1) // 1 = rock, 2 = paper, 3 = scissors
