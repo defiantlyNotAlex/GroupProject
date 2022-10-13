@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "damageCalculator.h"
 #include <iostream>
 
 class Sprite {
@@ -13,22 +14,27 @@ class Sprite {
         int level;
         int exp;
         int attack;
-        int HPcapcity; // max HP of a character
+        int defence;
+        int type;
+        int HPcapacity; // max HP of a character
         int HP;
     public:
         // default constructor
         Sprite() {
             level = 1;
             attack = 10;
-            HPcapcity = 100;
+            defence = 2;
+            HPcapacity = 100;
             HP = 100;
             exp = 0;
         }
         // constructor with customized level, attack, and HP capacity
-        Sprite(int lvl, int attack, int HPcapacity) {
+        Sprite(int lvl, int attack, int defence, int type, int HPcapacity) {
             level = lvl;
             this->attack = attack;
-            this->HPcapcity = HPcapacity;
+            this->defence = defence;
+            this->type = type;
+            this->HPcapacity = HPcapacity;
 
             exp = 0;
             HP = HPcapacity;
@@ -54,7 +60,15 @@ class Sprite {
         // fight function - need to add more attack effect
         void fight(Sprite *enemy) {
             int *enemyPosition = enemy->getPosition();
-            enemy->HP -= this->attack;
+            std::cout << "Prev: " << enemy->HP << std::endl;
+            if (enemy->HP - damageCalculator(this->attack, enemy->defence, enemy->type, this->type)  < 0) {
+                enemy->HP = 0;
+            } else {
+                enemy->HP -= damageCalculator(this->attack, enemy->defence, enemy->type, this->type);
+            }
+            std::cout << "After: " << enemy->HP << std::endl;
+            // change enemy's HP bar size
+            enemy->changeHPBar(enemy->HP);
         }
         // check if character is alive
         bool isAlive() {
@@ -69,7 +83,8 @@ class Sprite {
         }
         // HP bar change according to current HP
         void changeHPBar(int currentHP) {
-            float proportion = 1.0 * currentHP / HPcapcity;
+            float proportion = 1.0 * currentHP / HPcapacity;
+            std::cout << proportion << std::endl;
             this->HP_bar->setScale(proportion, 1);
         } 
         ~Sprite() {}
