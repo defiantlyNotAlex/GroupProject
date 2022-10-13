@@ -7,7 +7,7 @@ class Enemy: public Sprite {
     // private:
 
     public:
-        Enemy(int x, int y, int lvl, int attack, int HPcapacity): Sprite(lvl, attack, HPcapacity) {
+        Enemy(int x, int y, int lvl, int type, int attack, int defence, int HPcapacity): Sprite(lvl, attack, defence, type, HPcapacity) {
             drawBody(x, y, sf::Color::Red);
         }
         ~Enemy() {}
