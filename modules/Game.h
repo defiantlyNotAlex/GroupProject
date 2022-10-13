@@ -18,10 +18,14 @@ class Game {
         // constructor and initialize objects inside this
         Game(int size, std::string title) {
             window = new RenderWindow(VideoMode(size, size), title);
-            player = new Player(size/2, size*3/4, 1, 40, 100);
+            player = new Player(size/2, size*3/4, 1, 40, 5, 100);
             for (int i=0; i<3; i++) {
-                enemies[i] = new Enemy(size*(i+1)/4, size/4, 1, 10, 100);
+                enemies[i] = new Enemy(size*(i+1)/4, size/4, 1, 2, 10, 20, 100);
             }
+
+            //Declare a Font object
+
+            //Load and check the availability of the font file
 
             buttons[0] = new AttackButton("Rock", 5, size-55);
             buttons[1] = new AttackButton("Paper", 60, size-55);
