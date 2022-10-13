@@ -27,6 +27,7 @@ class Game {
 
             //Load and check the availability of the font file
 
+            // attack buttons
             buttons[0] = new AttackButton(1, 5, size-55);
             buttons[1] = new AttackButton(2, 60, size-55);
             buttons[2] = new AttackButton(3, 115, size-55);
@@ -39,9 +40,9 @@ class Game {
                     if (e.type == Event::Closed) {
                         window->close();
                     }
-                    // attack
-                    if (Keyboard::isKeyPressed(Keyboard::Space)) {
-                        std::cout << "Key pressed" << std::endl;
+                    // attack aka game starts
+                    while (player->isAlive() && checkAllEnemiesAlive()) {
+
                     }
                 }
 

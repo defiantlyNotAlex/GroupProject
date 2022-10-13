@@ -31,9 +31,14 @@ class AttackButton {
             text->setFillColor(sf::Color::Red);
             text->setPosition(x, y);
         }
+        // render attack button on window
         void draw(sf::RenderWindow *win) {
             win->draw(*body);
             win->draw(*text);
+        }
+        // get attack type of the character
+        int getAttackType() {
+            return type;
         }
 };
 #endif
