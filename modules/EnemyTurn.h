@@ -8,7 +8,7 @@
 using namespace std;
 
 // Use playerturn.h assignment in here.
-class enemy_turn: public player_turn{
+class enemy_turn: public player_turn {
 
    public:
       enemy_turn(){
@@ -25,10 +25,12 @@ class enemy_turn: public player_turn{
              break;
           }
         }
+        // get num
         enemy_Turn = Enemy_Turn_num;
         // Returns enemy_Turn of playerturn class.
         return enemy_Turn;
       }
+      ~enemy_turn() {}
 
    private:
     // The number of turns during the game battle
