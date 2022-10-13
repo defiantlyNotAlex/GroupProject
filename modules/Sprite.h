@@ -54,15 +54,7 @@ class Sprite {
         // fight function - need to add more attack effect
         void fight(Sprite *enemy) {
             int *enemyPosition = enemy->getPosition();
-            std::cout << "Prev: " << enemy->HP << std::endl;
-            if (enemy->HP - this->attack < 0) {
-                enemy->HP = 0;
-            } else {
-                enemy->HP -= this->attack;
-            }
-            std::cout << "After: " << enemy->HP << std::endl;
-            // change enemy's HP bar size
-            enemy->changeHPBar(enemy->HP);
+            enemy->HP -= this->attack;
         }
         // check if character is alive
         bool isAlive() {

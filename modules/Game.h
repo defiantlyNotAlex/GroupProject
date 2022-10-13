@@ -18,8 +18,12 @@ class Game {
         // constructor and initialize objects inside this
         Game(int size, std::string title) {
             window = new RenderWindow(VideoMode(size, size), title);
+<<<<<<< HEAD
             player = new Player(size/2, size*3/4, 1, 40, 100);
 
+=======
+            player = new Player(size/2, size*3/4, 1, 50, 100);
+>>>>>>> parent of 13a94d6 (add HP bar logic)
             for (int i=0; i<3; i++) {
                 enemies[i] = new Enemy(size*(i+1)/4, size/4, 1, 10, 100);
             }
@@ -36,16 +40,9 @@ class Game {
                     if (e.type == Event::Closed) {
                         window->close();
                     }
-                    while (player->isAlive() && checkAllEnemiesAlive()) {
-                        // temporary attack
-                        if (Keyboard::isKeyPressed(Keyboard::Space)) {
-                            player->fight(enemies[0]);
-                            for (int i=0; i<3; i++) {
-                                if (enemies[i]->isAlive()) {
-                                    enemies[i]->fight(player);
-                                }
-                            }
-                        }
+                    // attack
+                    if (Keyboard::isKeyPressed(Keyboard::Space)) {
+                        std::cout << "Key pressed" << std::endl;
                     }
                 }
 
