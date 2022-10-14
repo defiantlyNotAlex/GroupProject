@@ -7,11 +7,15 @@ class AttackButton {
     private:
         sf::RectangleShape *body;
         sf::Text *text;
+        int x, y;
         int type;
+        int width = 50;
     public:
         // 1 = rock, 2 = paper, 3 = scissors
         AttackButton(int type, int x, int y) {
-            body = new sf::RectangleShape(sf::Vector2f(50, 50));
+            this->x = x;
+            this->y = y;
+            body = new sf::RectangleShape(sf::Vector2f(width, width));
             body->setFillColor(sf::Color::White);
             body->setPosition(x, y);
 
@@ -39,6 +43,14 @@ class AttackButton {
         // get attack type of the character
         int getAttackType() {
             return type;
+        }
+        bool isClicked() {
+            // if (body->getGlobalBounds().contains(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)) {
+            //     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            //         return true;
+            //     }
+            // }
+            // return false;
         }
 };
 #endif

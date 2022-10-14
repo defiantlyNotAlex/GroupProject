@@ -40,10 +40,13 @@ class Game {
                     if (e.type == Event::Closed) {
                         window->close();
                     }
-                    // attack aka game starts
-                    while (player->isAlive() && checkAllEnemiesAlive()) {
-
+                    if (buttons[0]->isClicked()) {
+                        std::cout << "Clicked"<<std::endl;
                     }
+                    // attack aka game starts
+                    // while (player->isAlive() && checkAllEnemiesAlive()) {
+
+                    // }
                 }
 
                 window->clear();
