@@ -3,16 +3,23 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <cstring>
 #include <stack>
 #include <iostream>
 #include "Player.h"
 #include "Enemy.h"
 #include "AttackButton.h"
+#include <fstream>
+#include <cstdlib>
+
+using namespace std;
+using std::ofstream;
 
 using namespace sf;
 
 class Game {
     private:
+        ofstream outdata;
         RenderWindow *window;
         Player *player;
         std::stack <Enemy*> enemies;  
@@ -24,27 +31,88 @@ class Game {
             window = new RenderWindow(VideoMode(size, size), title);
             player = new Player(size/2, size*3/4, 1, 40, 5, 100);
             for (int i=0; i<3; i++) {
-                enemies.push(new Enemy(size*(i+1)/4, size/4, 1, 2, 10, 20, 100)); // x, y, level, type, attackstat, defence stat, max hp
+                enemies.push(new Enemy(size*(i+1)/4, size/4, 10, i+1, 10, 5, 100)); // x, y, level, type, attackstat, defence stat, max hp
             }
 
             buttons[0] = new AttackButton("Rock", 5, size-55, 1); // add three buttons one of each type
             buttons[1] = new AttackButton("Paper", 65, size-55, 2);
             buttons[2] = new AttackButton("Scissor", 125, size-55, 3);
+
+            ifstream MyReadFile("test.txt");
+            string line;
+            int* atributes = new int[8];
+            getline(MyReadFile, line);
+            cout << line << endl;
+            int j = 0;
+            for (int i = 0; i < 8; i++) {
+                string segment = "";
+                while (line[j] != ',') {
+                    segment += line[j];
+                    j++;
+                }
+                cout <<segment<< endl;
+                j++;
+                atributes[i] = stoi(segment);
+            }
+            player->loadAtributes(atributes);
+            while (getline(MyReadFile, line)) {
+                int j = 0;
+                for (int i = 0; i < 8; i++) {
+                    string segment = "";
+                    while (line[j] != ',') {
+                        segment += line[j];
+                        j++;
+                    }
+                    cout << segment << endl;
+                    j++;
+                    atributes[i] = stoi(segment);
+                }
+                enemies.push(new Enemy());
+                enemies.top()->loadAtributes(atributes);
+            }
         }
         void run() {
             while (window->isOpen()) {
                 Event e;
                 // all events happen inside this while loop
                 while (window->pollEvent(e)) {
+                    // save the enemy states
                     if (e.type == Event::Closed) {
+                        outdata.open("test.txt");
+                        if (!outdata) { // file couldn't be opened
+                            cout << "Error: file could not be opened" << endl;
+                            exit(1);
+                        }
+                        else
+                        {
+                            int* atributes = player->saveAtributes();
+                            for (int i = 0; i < 8; i++) {
+                                outdata << atributes[i] << ",";
+                            }
+                            outdata << endl;
+                            std::cout << "file opened" << endl;
+                            while (enemies.size() > 0) {
+                                int* atributes = enemies.top()->saveAtributes();
+                                for (int i = 0; i < 8; i++) {
+                                    outdata << atributes[i] << ",";
+                                }
+                                outdata << endl;
+                                enemies.pop();
+                            }
+                        }
+
+                        outdata.close();
+
                         window->close();
                     }
-                    // temporary attack
-                    /*if (Keyboard::isKeyPressed(Keyboard::Space)) {
-                        std::cout << "Key pressed" << std::endl;
+                    
+                    if (Keyboard::isKeyPressed(Keyboard::Space)) {
+
+                        /*std::cout << "Key pressed" << std::endl;              // temporary attack
                         player->fight(enemies.top(), enemies.top()->typing);
-                        enemies.top()->fight(player);
-                    }*/
+                        enemies.top()->fight(player);*/
+                        
+                    }
                     if (!enemies.top()->isAlive() && enemies.size() > 1) { // if the enemy dies
                         enemies.pop(); // delete the enemy
                         player->lvlUp(); // level up the player

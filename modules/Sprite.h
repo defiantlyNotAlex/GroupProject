@@ -39,6 +39,30 @@ class Sprite {
             exp = 0;
             HP = HPcapacity;
         }
+        int* saveAtributes() { //x, y, level, attack, defence, type, maxHP, HP
+            // returns the attributes of the sprite 
+            int* returnArray = new int[8];
+            returnArray[0] = this->position[0];
+            returnArray[1] = this->position[1];
+            returnArray[2] = this->level;
+            returnArray[3] = this->attack;
+            returnArray[4] = this->defence;
+            returnArray[5] = this->position[type];
+            returnArray[6] = this->HPcapacity;
+            returnArray[7] = this->HP;
+            return returnArray;
+        }
+
+        void loadAtributes(int* atributes) {
+            this->position[0] = atributes[0];
+            this->position[1] = atributes[1];
+            this->level = atributes[2];
+            this->attack = atributes[3];
+            this->defence = atributes[4];
+            this->position[type] = atributes[5];
+            this->HPcapacity = atributes[6];
+            this->HP = atributes[7];
+        }
         // dont care about it:)) until the end.
         void drawBody(int x, int y, sf::Color color) { // draws the sprite based of its atributes
             position[0], position[1] = x, y; //poistion
