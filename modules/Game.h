@@ -75,7 +75,6 @@ class Game {
             while (window->isOpen()) {
                 Event e;
                 // all events happen inside this while loop
-                
                 while (window->pollEvent(e)) {
                     // save the enemy states
                     if (e.type == Event::Closed) {
