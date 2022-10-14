@@ -37,5 +37,3 @@ class player_turn{
       int enemy_Turn;
 
 };
-
-#endif
