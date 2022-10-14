@@ -2,6 +2,7 @@
 #define PLAYERTURN_H
 
 #include "Player.h"
+#include "Enemy.h"
 #include "Sprite.h"
 #include <iostream>
 
@@ -29,7 +30,6 @@ class player_turn{
         return player_Turn;
         std::cout << player_Turn << std::endl; 
       }
-      ~player_turn() {}
 
    private:
     // The number of turns during the game battle
@@ -37,5 +37,3 @@ class player_turn{
       int enemy_Turn;
 
 };
-
-#endif

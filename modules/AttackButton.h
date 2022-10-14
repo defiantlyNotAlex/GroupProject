@@ -3,42 +3,36 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <iostream>
+
 class AttackButton {
     private:
         sf::RectangleShape *body;
         sf::Text *text;
-        int type;
     public:
-        // 1 = rock, 2 = paper, 3 = scissors
-        AttackButton(int type, int x, int y) {
+        sf::Vector2i position;
+        sf::Vector2i size;
+        int attackType;
+        AttackButton(std::string type, int x, int y, int attack_Type) {
+            // stuff for rendering
             body = new sf::RectangleShape(sf::Vector2f(50, 50));
             body->setFillColor(sf::Color::White);
             body->setPosition(x, y);
-
             text = new sf::Text();
             text->setCharacterSize(20);
-            switch(type) {
-                case 1:
-                    text->setString("Rock");
-                    break;
-                case 2:
-                    text->setString("Paper");
-                    break;
-                case 3:
-                    text->setString("Scissor");
-                    break;
-            }
+            text->setString(type);
             text->setFillColor(sf::Color::Red);
             text->setPosition(x, y);
+            // stuff for renderign
+
+            // variables needed for functionality
+            position = sf::Vector2i(x, y); // position stores the x, y value of the top right of the button
+            size = sf::Vector2i(50, 50);   // size stores the width and height of the button 
+            attackType = attack_Type;      // attackType stores what kind of attack the button will dp]o
         }
-        // render attack button on window
-        void draw(sf::RenderWindow *win) {
+        void draw(sf::RenderWindow *win) { // draw the button
             win->draw(*body);
             win->draw(*text);
-        }
-        // get attack type of the character
-        int getAttackType() {
-            return type;
         }
 };
 #endif

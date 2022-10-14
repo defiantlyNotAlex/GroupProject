@@ -40,15 +40,16 @@ class Sprite {
             HP = HPcapacity;
         }
         // dont care about it:)) until the end.
-        void drawBody(int x, int y, sf::Color color) {
-            position[0], position[1] = x, y;
+        void drawBody(int x, int y, sf::Color color) { // draws the sprite based of its atributes
+            position[0], position[1] = x, y; //poistion
+
             body = new sf::CircleShape();
             body->setRadius(10);
             body->setPosition(x,y);
             body->setFillColor(color);
             body->setOrigin(5,5);
 
-            HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5));
+            HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5)); // draw health bar
             HP_bar->setFillColor(sf::Color::Green);
             HP_bar->setPosition(x-10,y-15);
         }
@@ -57,18 +58,26 @@ class Sprite {
             win->draw(*body);
             win->draw(*HP_bar);
         }
-        // fight function - need to add more attack effect
-        void fight(Sprite *enemy) {
-            int *enemyPosition = enemy->getPosition();
-            std::cout << "Prev: " << enemy->HP << std::endl;
-            if (enemy->HP - damageCalculator(this->attack, enemy->defence, enemy->type, this->type)  < 0) {
-                enemy->HP = 0;
-            } else {
-                enemy->HP -= damageCalculator(this->attack, enemy->defence, enemy->type, this->type);
+
+        void fight(Sprite *target, int attackType) { // fight function
+
+            std::cout << "Prev: " << target->HP << std::endl; // print health to console
+
+            // calculate the damage and apply it to the target
+            target->HP -= damageCalculator(this->attack+this->level, target->defence+target->level, target->type, attackType);
+            
+            std::cout << "After: " << target->HP << std::endl;  // print health to console
+            // change target's HP bar size
+            target->changeHPBar(target->HP);
+        }
+        void lvlUp() { // increments the level of the sprite
+            level++;
+        }
+        void heal(int amount) { // heals the sprite but stays below the max hp level
+            HP += amount;
+            if (HP > HPcapacity + level) {
+                HP = HPcapacity + level;
             }
-            std::cout << "After: " << enemy->HP << std::endl;
-            // change enemy's HP bar size
-            enemy->changeHPBar(enemy->HP);
         }
         // check if character is alive
         bool isAlive() {
@@ -81,8 +90,10 @@ class Sprite {
         int* getPosition() {
             return position;
         }
+
         // HP bar change according to current HP
         void changeHPBar(int currentHP) {
+
             float proportion = 1.0 * currentHP / HPcapacity;
             std::cout << proportion << std::endl;
             this->HP_bar->setScale(proportion, 1);
