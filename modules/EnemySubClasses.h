@@ -34,7 +34,7 @@ public:
     int typing; // public variable for attacks
 
     // constructor
-    Scissor() : Enemy(x, y, 10, 3, 50, 1, 50, sf::Color::Green) {
+    Scissor() : Enemy(x, y, 10, 3, 50, 1, 50, sf::Color::Yellow) {
         typing = 3;
     }
 };

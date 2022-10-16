@@ -15,6 +15,7 @@ class Player: public Sprite {
         Player(int x, int y, int lvl, int attack, int defence, int HPcapacity): Sprite(lvl, attack, defence, 0, HPcapacity) {
             drawBody(x, y, sf::Color::Green);
             printStats();
+            setHPText();
         }
         void drawBody(int x, int y, sf::Color color) { // draws the sprite based of its atributes
             setPosition(x, y);
@@ -53,6 +54,7 @@ class Player: public Sprite {
             win->draw(*body);
             win->draw(*HP_bar);
             win->draw(*text);
+            win->draw(*HPText);
         }
         ~Player() {}
 };

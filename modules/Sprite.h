@@ -5,6 +5,7 @@
 
 #include "damageCalculator.h"
 #include <iostream>
+#include <sstream>
 
 class Sprite {
     private:
@@ -19,6 +20,8 @@ class Sprite {
     protected:
         sf::CircleShape* body;
         sf::RectangleShape* HP_bar;
+        sf::Font font;
+        sf::Text *HPText;
     public:
         // default constructor
         Sprite() {
@@ -65,36 +68,41 @@ class Sprite {
             this->HPcapacity = atributes[6];
             this->HP = atributes[7];
         }
-
+        // draw appearance of the character
         virtual void drawBody(int x, int y, sf::Color color) = 0;
         // render the image in window
         virtual void draw(sf::RenderWindow *win) = 0;
-
-        void fight(Sprite *target, int attackType) { // fight function
+        // fight function
+        void fight(Sprite *target, int attackType) {
+            int damage = damageCalculator(this->attack+this->level, target->defence+target->level, target->type, attackType);
             // calculate the damage and apply it to the target
-            target->HP -= damageCalculator(this->attack+this->level, target->defence+target->level, target->type, attackType);
+            target->HP -= damage;
             // if hp < 0 then hp = 0
-            if (target->HP < 0) {target->HP = 0;}
+            if (target->HP < 0) { target->HP = 0; }
             // change target's HP bar size
             target->changeHPBar();
         }
-        void lvlUp() { // increments the level of the sprite
-            level++;
-        }
+        // increments the level of the sprite
+        void lvlUp() { level++; }
+        // set the position of the character
         void setPosition(int x, int y) {
             this->position[0] = x;
             this->position[1] = y;
         }
+        // get the body, or the appearance, of the character
         sf::CircleShape *getBody() { return body; }
+        // get the HP bar of the character
         sf::RectangleShape *getHPBar() { return HP_bar; }
-        void heal(int amount) { // heals the sprite but stays below the max hp level
+        // heals the sprite but stays below the max hp level
+        void heal(int amount) {
             HP += amount;
             if (HP > HPcapacity + level) {
                 HP = HPcapacity + level;
             }
         }
+        // reset the level to 1 and the HP to full
         void reset() {
-            level = 0;
+            level = 1;
             HP = HPcapacity;
         }
         // check if character is alive
@@ -108,7 +116,28 @@ class Sprite {
         void changeHPBar() {
             float proportion = (1.0 * HP) / (1.0 * HPcapacity);
             this->HP_bar->setScale(proportion, 1);
-        } 
+            changeHPText();
+        }
+        // display text to show the amount of HP lost
+        void setHPText() {
+            if (!font.loadFromFile("fonts/courbd.ttf")) {
+                std::cout << "Font not loading" << std::endl;
+            }
+            HPText = new sf::Text();
+            HPText->setFont(font);
+            HPText->setCharacterSize(12);
+            std::stringstream formatText;
+            formatText << HP << "/" << HPcapacity;
+            HPText->setString(formatText.str());
+            HPText->setFillColor(sf::Color::Red);
+            HPText->setPosition(position[0]+50, position[1]-15);
+        }
+        void changeHPText() {
+            std::stringstream formatText;
+            formatText << HP << "/" << HPcapacity;
+            HPText->setString(formatText.str());
+        }
+        // destructor
         ~Sprite() {
             delete body;
             delete HP_bar;
