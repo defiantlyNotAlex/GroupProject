@@ -2,6 +2,8 @@
 #define ESC_H
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
+int const x = 250;
+int const y = 60;
 
 class Rock : public Enemy {
     // private:
@@ -10,10 +12,7 @@ public:
     int typing; // public variable for attacks
 
     // constructor
-    Rock(int x, int y) : Enemy(250, 20, 10, 1, 50, 1, 50) {
-        typing = 1;
-    }
-    Rock() : Enemy(250, 20, 10, 1, 50, 1, 50) {
+    Rock() : Enemy(x, y, 10, 1, 50, 1, 50, sf::Color::Red) {
         typing = 1;
     }
 };
@@ -24,10 +23,7 @@ public:
     int typing; // public variable for attacks
 
     // constructor
-    Paper(int  x, int y) : Enemy(250, 20, 10, 2, 50, 1, 50) {
-        typing = 2;
-    }
-    Paper() : Enemy(250, 20, 10, 2, 50, 1, 50) {
+    Paper() : Enemy(x, y, 10, 2, 50, 1, 50, sf::Color::Blue) {
         typing = 2;
     }
 };
@@ -38,10 +34,7 @@ public:
     int typing; // public variable for attacks
 
     // constructor
-    Scissor(int x, int  y) : Enemy(x, y, 10, 3, 50, 1, 50) {
-        typing = 3;
-    }
-    Scissor() : Enemy(250, 20, 10, 3, 50, 1, 50) {
+    Scissor() : Enemy(x, y, 10, 3, 50, 1, 50, sf::Color::Green) {
         typing = 3;
     }
 };

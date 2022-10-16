@@ -13,12 +13,14 @@
 #include <cstdlib>
 #include "EnemySubClasses.h"
 
+
 using namespace std;
 using std::ofstream;
 using namespace sf;
 
 class Game {
     private:
+        bool mouseDownLastFrame = false;
         ofstream outdata;
         RenderWindow *window;
         Player *player;
@@ -89,6 +91,7 @@ class Game {
             
             player->loadAtributes(atributes);
             player->changePrintStats();
+            player->changeHPBar();
             // load enemy attributes
             while (getline(MyReadFile, line)) {
                 int j = 0;
@@ -102,14 +105,17 @@ class Game {
                     j++;
                     atributes[i] = stoi(segment);
                 }
-                enemies.push(new Enemy());
+                enemies.push(new Enemy(atributes[0], atributes[1], atributes[2], atributes[5], atributes[3], atributes[4], atributes[6], sf::Color::Red));
                 enemies.top()->loadAtributes(atributes);
+                enemies.top()->changeHPBar();
+
             }
             if (enemies.size() == 0) {
                 this->reset();
             }
         }
         void reset() {
+            player->reset();
             while (!enemies.empty())
                 enemies.pop();
             for (int i = 0; i < 3; i++) {
@@ -117,6 +123,7 @@ class Game {
                 enemies.push(new Paper());
                 enemies.push(new Scissor());
             }
+            player->changeHPBar();
         }
         void run() {
             while (window->isOpen()) {
@@ -132,20 +139,20 @@ class Game {
                     if (!enemies.top()->isAlive()) { // if the enemy dies
                         enemies.pop(); // delete the enemy
                         player->lvlUp(); // level up the player
-                        player->heal(50); // heal the player
-                        if (enemies.size() == 0) {
-                            this->save();
-                            cout << "YOU WIN" << endl;
+                        player->heal(20); // heal the player
+                        if (enemies.empty()) {
                             this->reset();
+                            cout << "YOU WIN" << endl;
                         }
                         player->changePrintStats();
                     }
                     if (!player->isAlive()) {
                         cout << "YOU LOSE" << endl;
-                        this->load();
+                        this->reset();
                     }
-                    if (Mouse::isButtonPressed(Mouse::Left)) // if the player clicks
+                    if (Mouse::isButtonPressed(Mouse::Left) && !mouseDownLastFrame) // if the player clicks
                     {
+
                         Vector2i mousePos = Mouse::getPosition()-window->getPosition()-Vector2i(10, 45); 
                         // get the mouse position relative to the window (getPosition gets the mouse position on the screen)
                         //std::cout << "m1/" << mousePos.x << "/" << mousePos.y << std::endl; // print mouse position
@@ -162,6 +169,12 @@ class Game {
 
                             }
                         }
+                    }
+                    if (Mouse::isButtonPressed(Mouse::Left)) {
+                        mouseDownLastFrame = true;
+                    }
+                    else {
+                        mouseDownLastFrame = false;
                     }
 
                     

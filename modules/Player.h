@@ -54,7 +54,6 @@ class Player: public Sprite {
             win->draw(*HP_bar);
             win->draw(*text);
         }
-        
         ~Player() {}
 };
 #endif
