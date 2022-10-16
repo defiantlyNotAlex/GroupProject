@@ -11,13 +11,15 @@ class Enemy: public Sprite {
         int typing; // public variable for attacks
 
         // constructor with variables
-        Enemy(int x, int y, int lvl, int type, int attack, int defence, int HPcapacity): Sprite(lvl, attack, defence, type, HPcapacity) {
-            drawBody(x, y, sf::Color::Red);
+        Enemy(int x, int y, int lvl, int type, int attack, int defence, int HPcapacity, sf::Color color): Sprite(lvl, attack, defence, type, HPcapacity) {
             typing = type;
+            drawBody(x, y, color); 
+            
         }
-        Enemy() {
-            drawBody(20, 20, sf::Color::Red);
+        Enemy(int x, int y, sf::Color color) {
             typing = 0;
+            drawBody(x, y, color);
+            
         }
         void drawBody(int x, int y, sf::Color color) {
             setPosition(x, y);

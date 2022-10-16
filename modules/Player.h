@@ -35,6 +35,7 @@ class Player: public Sprite {
             win->draw(*body);
             win->draw(*HP_bar);
         }
+        
         // void printStats() {
         //     if (!font.loadFromFile("fonts/courbd.ttf")) {
         //         std::cout << "Font not loading" << std::endl;

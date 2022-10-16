@@ -77,7 +77,7 @@ protected:
             // if hp < 0 then hp = 0
             if (target->HP < 0) {target->HP = 0;}
             // change target's HP bar size
-            target->changeHPBar(target->HP);
+            target->changeHPBar();
         }
         void lvlUp() { // increments the level of the sprite
             level++;
@@ -92,6 +92,10 @@ protected:
                 HP = HPcapacity + level;
             }
         }
+        void reset() {
+            level = 0;
+            HP = HPcapacity;
+        }
         // check if character is alive
         bool isAlive() {
             if (HP <= 0) {
@@ -105,8 +109,8 @@ protected:
         }
 
         // HP bar change according to current HP
-        void changeHPBar(int currentHP) {
-            float proportion = (1.0 * currentHP) / (1.0 * HPcapacity);
+        void changeHPBar() {
+            float proportion = (1.0 * HP) / (1.0 * HPcapacity);
            //std::cout << proportion << "/" << currentHP << "/" << HPcapacity << std::endl;
             this->HP_bar->setScale(proportion, 1);
         } 
