@@ -1,4 +1,4 @@
-ifndef GAME_H
+#ifndef GAME_H
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
@@ -24,6 +24,7 @@ class Game {
         std::stack <Enemy*> enemies;  
         // enemies declared as a stack so that dead enemies can be easily removed and new enemies added easily
         AttackButton *buttons[3];
+        // sf::Font font;
     public:
         // constructor and initialize objects inside this
         Game(int size, std::string title) {
@@ -37,6 +38,7 @@ class Game {
             buttons[1] = new AttackButton("Paper", 65, size-55, 2);
             buttons[2] = new AttackButton("Scissor", 125, size-55, 3);
 
+            // load player attributes
             ifstream MyReadFile("test.txt");
             string line;
             int* atributes = new int[8];
@@ -54,6 +56,7 @@ class Game {
                 atributes[i] = stoi(segment);
             }
             player->loadAtributes(atributes);
+            // load enemy attributes
             while (getline(MyReadFile, line)) {
                 int j = 0;
                 for (int i = 0; i < 8; i++) {
@@ -69,6 +72,11 @@ class Game {
                 enemies.push(new Enemy());
                 enemies.top()->loadAtributes(atributes);
             }
+
+            // load font
+            // if (!font.loadFromFile("courbd.ttf")) {
+            //     std::cout << "Font not loading" << std::endl;
+            // }
         }
         void run() {
             while (window->isOpen()) {
@@ -105,13 +113,6 @@ class Game {
                         window->close();
                     }
                     
-                    if (Keyboard::isKeyPressed(Keyboard::Space)) {
-
-                        /*std::cout << "Key pressed" << std::endl;              // temporary attack
-                        player->fight(enemies.top(), enemies.top()->typing);
-                        enemies.top()->fight(player);*/
-                        
-                    }
                     if (!enemies.top()->isAlive()) { // if the enemy dies
                         enemies.pop(); // delete the enemy
                         player->lvlUp(); // level up the player

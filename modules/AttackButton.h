@@ -8,6 +8,7 @@
 class AttackButton {
     private:
         sf::RectangleShape *body;
+        sf::Font font;
         sf::Text *text;
     public:
         sf::Vector2i position;
@@ -18,11 +19,16 @@ class AttackButton {
             body = new sf::RectangleShape(sf::Vector2f(50, 50));
             body->setFillColor(sf::Color::White);
             body->setPosition(x, y);
+
+            if (!font.loadFromFile("fonts/courbd.ttf")) {
+                std::cout << "Font not loading" << std::endl;
+            }
             text = new sf::Text();
-            text->setCharacterSize(20);
+            text->setFont(font);
+            text->setCharacterSize(15);
             text->setString(type);
             text->setFillColor(sf::Color::Red);
-            text->setPosition(x, y);
+            text->setPosition(x, y+20);
             // stuff for renderign
 
             // variables needed for functionality
