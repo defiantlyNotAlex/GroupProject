@@ -118,7 +118,6 @@ class Game {
                 enemies.push(new Enemy(atributes[0], atributes[1], atributes[2], atributes[5], atributes[3], atributes[4], atributes[6], sf::Color::Red));
                 enemies.top()->loadAtributes(atributes);
                 enemies.top()->changeHPBar();
-
             }
             if (enemies.size() == 0) {
                 this->reset();
@@ -149,7 +148,7 @@ class Game {
                     if (!enemies.top()->isAlive()) { // if the enemy dies
                         enemies.pop(); // delete the enemy
                         player->lvlUp(); // level up the player
-                        player->heal(20); // heal the player
+                        player->heal(20+player->getLvl()); // heal the player
                         if (enemies.empty()) {
                             this->reset();
                             cout << "YOU WIN" << endl;

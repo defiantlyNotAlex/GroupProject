@@ -50,6 +50,10 @@ class Player: public Sprite {
             formatText << "LVL: " << attributes[2] << "\nATK: " << attributes[3] << "\nDEF: " << attributes[4];
             text->setString(formatText.str());
         }
+        void reset() {
+            int newAttributes[8] = { 0, 250, 1, 50, 10, 0, 100, 100 };
+            loadAtributes(newAttributes);
+        }
         void draw(sf::RenderWindow* win) {
             win->draw(*body);
             win->draw(*HP_bar);

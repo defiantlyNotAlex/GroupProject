@@ -83,7 +83,12 @@ class Sprite {
             target->changeHPBar();
         }
         // increments the level of the sprite
-        void lvlUp() { level++; }
+        void lvlUp() { 
+            level++;
+            HPcapacity++;
+            attack++;
+            defence++;
+        }
         // set the position of the character
         void setPosition(int x, int y) {
             this->position[0] = x;
@@ -93,11 +98,12 @@ class Sprite {
         sf::CircleShape *getBody() { return body; }
         // get the HP bar of the character
         sf::RectangleShape *getHPBar() { return HP_bar; }
+        int getLvl() { return level; }
         // heals the sprite but stays below the max hp level
         void heal(int amount) {
             HP += amount;
-            if (HP > HPcapacity + level) {
-                HP = HPcapacity + level;
+            if (HP > HPcapacity) {
+                HP = HPcapacity;
             }
         }
         // reset the level to 1 and the HP to full
@@ -141,6 +147,7 @@ class Sprite {
         ~Sprite() {
             delete body;
             delete HP_bar;
+            delete HPText;
         }
 };
 #endif
