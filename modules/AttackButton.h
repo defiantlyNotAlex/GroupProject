@@ -40,5 +40,9 @@ class AttackButton {
             win->draw(*body);
             win->draw(*text);
         }
+        ~AttackButton() {
+            delete body;
+            delete text;
+        }
 };
 #endif

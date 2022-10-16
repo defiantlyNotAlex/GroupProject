@@ -160,6 +160,9 @@ class Game {
                 window->display();
             }
         }
-        ~Game() {}
+        ~Game() {
+            delete window;
+            delete player;
+        }
 };
 #endif

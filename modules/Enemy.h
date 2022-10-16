@@ -4,8 +4,11 @@
 #include "Sprite.h"
 
 class Enemy: public Sprite {
-    // private:
-
+    private:
+        sf::CircleShape *body = getBody();
+        sf::RectangleShape *HP_bar = getHPBar();
+        sf::Font font;
+        sf::Text *text;
     public:
         int typing; // public variable for attacks
 
@@ -17,6 +20,37 @@ class Enemy: public Sprite {
         Enemy() {
             drawBody(20, 20, sf::Color::Red);
             typing = 0;
+        }
+        void drawBody(int x, int y, sf::Color color) {
+            body = new sf::CircleShape();
+            body->setRadius(10);
+            body->setPosition(x,y);
+            body->setFillColor(color);
+            body->setOrigin(5,5);
+
+            HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5)); // draw health bar
+            HP_bar->setFillColor(sf::Color::Red);
+            HP_bar->setPosition(x-10,y-15);
+
+            if (!font.loadFromFile("fonts/courbd.ttf")) {
+                std::cout << "Font not loading" << std::endl;
+            }
+            text = new sf::Text();
+            text->setFont(font);
+            text->setCharacterSize(15);
+            switch (typing) {
+                case 1:
+                    text->setString("Rock");
+                    break;
+                case 2:
+                    text->setString("Paper");
+                    break;
+                case 3:
+                    text->setString("Scissor");
+                    break;
+            }
+            text->setFillColor(sf::Color::Red);
+            text->setPosition(x, y+20);
         }
         ~Enemy() {}
 };

@@ -77,6 +77,8 @@ class Sprite {
             HP_bar->setFillColor(sf::Color::Green);
             HP_bar->setPosition(x-10,y-15);
         }
+        sf::CircleShape *getBody() { return body; }
+        sf::RectangleShape *getHPBar() { return HP_bar; }
         // render the image in window
         void draw(sf::RenderWindow *win) {
             win->draw(*body);
@@ -117,11 +119,13 @@ class Sprite {
 
         // HP bar change according to current HP
         void changeHPBar(int currentHP) {
-
             float proportion = 1.0 * currentHP / HPcapacity;
             std::cout << proportion << std::endl;
             this->HP_bar->setScale(proportion, 1);
         } 
-        ~Sprite() {}
+        ~Sprite() {
+            delete body;
+            delete HP_bar;
+        }
 };
 #endif
