@@ -88,12 +88,12 @@ protected:
 
         void fight(Sprite *target, int attackType) { // fight function
 
-            std::cout << "Prev: " << target->HP << std::endl; // print health to console
+            //std::cout << "Prev: " << target->HP << std::endl; // print health to console
 
             // calculate the damage and apply it to the target
             target->HP -= damageCalculator(this->attack+this->level, target->defence+target->level, target->type, attackType);
             
-            std::cout << "After: " << target->HP << std::endl;  // print health to console
+            //std::cout << "After: " << target->HP << std::endl;  // print health to console
             // change target's HP bar size
             target->changeHPBar(target->HP);
         }
@@ -121,7 +121,7 @@ protected:
         // HP bar change according to current HP
         void changeHPBar(int currentHP) {
             float proportion = (1.0 * currentHP) / (1.0 * HPcapacity);
-            std::cout << proportion << "/" << currentHP << "/" << HPcapacity << std::endl;
+           //std::cout << proportion << "/" << currentHP << "/" << HPcapacity << std::endl;
             this->HP_bar->setScale(proportion, 1);
         } 
         ~Sprite() {
