@@ -1,4 +1,4 @@
-#ifndef GAME_H
+ifndef GAME_H
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
@@ -14,7 +14,6 @@
 
 using namespace std;
 using std::ofstream;
-
 using namespace sf;
 
 class Game {
@@ -31,7 +30,7 @@ class Game {
             window = new RenderWindow(VideoMode(size, size), title);
             player = new Player(size/2, size*3/4, 1, 40, 5, 100);
             for (int i=0; i<3; i++) {
-                enemies.push(new Enemy(size*(i+1)/4, size/4, 10, i+1, 10, 5, 100)); // x, y, level, type, attackstat, defence stat, max hp
+                enemies.push(new Enemy(size*(i+1)/4, size/4, 100, i+1, 10, 5, 100)); // x, y, level, type, attackstat, defence stat, max hp
             }
 
             buttons[0] = new AttackButton("Rock", 5, size-55, 1); // add three buttons one of each type
@@ -113,10 +112,16 @@ class Game {
                         enemies.top()->fight(player);*/
                         
                     }
-                    if (!enemies.top()->isAlive() && enemies.size() > 1) { // if the enemy dies
+                    if (!enemies.top()->isAlive()) { // if the enemy dies
                         enemies.pop(); // delete the enemy
                         player->lvlUp(); // level up the player
                         player->heal(50); // heal the player
+                        if (enemies.size() == 0) {
+                            window->close();
+                        }
+                    }
+                    if (!player->isAlive()) {
+                        window->close();
                     }
                     if (Mouse::isButtonPressed(Mouse::Left)) // if the player clicks
                     {

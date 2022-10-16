@@ -15,7 +15,8 @@ class Enemy: public Sprite {
             typing = type;
         }
         Enemy() {
-            drawBody(0, 0, sf::Color::Red);
+            drawBody(20, 20, sf::Color::Red);
+            typing = 0;
         }
         ~Enemy() {}
 };
