@@ -11,11 +11,9 @@ public:
 
     // constructor
     Rock(int x, int y) : Enemy(250, 20, 10, 1, 50, 1, 50) {
-        drawBody(x, y, sf::Color::Green);
         typing = 1;
     }
     Rock() : Enemy(250, 20, 10, 1, 50, 1, 50) {
-        drawBody(250, 20, sf::Color::Green);
         typing = 1;
     }
 };
@@ -27,11 +25,9 @@ public:
 
     // constructor
     Paper(int  x, int y) : Enemy(250, 20, 10, 2, 50, 1, 50) {
-        drawBody(x, y, sf::Color::Red);
         typing = 2;
     }
     Paper() : Enemy(250, 20, 10, 2, 50, 1, 50) {
-        drawBody(250, 20, sf::Color::Red);
         typing = 2;
     }
 };
@@ -43,11 +39,9 @@ public:
 
     // constructor
     Scissor(int x, int  y) : Enemy(x, y, 10, 3, 50, 1, 50) {
-        drawBody(250, 20, sf::Color::Blue);
         typing = 3;
     }
     Scissor() : Enemy(250, 20, 10, 3, 50, 1, 50) {
-        drawBody(250, 20, sf::Color::Blue);
         typing = 3;
     }
 };

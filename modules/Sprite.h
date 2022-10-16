@@ -8,8 +8,6 @@
 
 class Sprite {
     private:
-        sf::CircleShape *body;
-        sf::RectangleShape *HP_bar;
         int position[2]; // x, y position of the sprite
         int level;
         int exp;
@@ -18,6 +16,9 @@ class Sprite {
         int type;
         int HPcapacity; // max HP of a character
         int HP;
+protected:
+    sf::CircleShape* body;
+    sf::RectangleShape* HP_bar;
     public:
         // default constructor
         Sprite() {
@@ -63,7 +64,7 @@ class Sprite {
             this->HPcapacity = atributes[6];
             this->HP = atributes[7];
         }
-        // dont care about it:)) until the end.
+
         void drawBody(int x, int y, sf::Color color) { // draws the sprite based of its atributes
             position[0], position[1] = x, y; //poistion
 
@@ -119,8 +120,8 @@ class Sprite {
 
         // HP bar change according to current HP
         void changeHPBar(int currentHP) {
-            float proportion = 1.0 * currentHP / HPcapacity;
-            std::cout << proportion << std::endl;
+            float proportion = (1.0 * currentHP) / (1.0 * HPcapacity);
+            std::cout << proportion << "/" << currentHP << "/" << HPcapacity << std::endl;
             this->HP_bar->setScale(proportion, 1);
         } 
         ~Sprite() {

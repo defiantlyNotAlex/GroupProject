@@ -5,8 +5,6 @@
 
 class Enemy: public Sprite {
     private:
-        sf::CircleShape *body = getBody();
-        sf::RectangleShape *HP_bar = getHPBar();
         sf::Font font;
         sf::Text *text;
     public:
@@ -51,6 +49,11 @@ class Enemy: public Sprite {
             }
             text->setFillColor(sf::Color::Red);
             text->setPosition(x, y+20);
+        }
+        void draw(sf::RenderWindow* win) {
+            win->draw(*body);
+            win->draw(*HP_bar);
+            win->draw(*text);
         }
         ~Enemy() {}
 };

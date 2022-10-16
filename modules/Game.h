@@ -11,6 +11,7 @@
 #include "AttackButton.h"
 #include <fstream>
 #include <cstdlib>
+#include "EnemySubClasses.h"
 
 using namespace std;
 using std::ofstream;
@@ -31,7 +32,7 @@ class Game {
             window = new RenderWindow(VideoMode(size, size), title);
             player = new Player(size/2, size*3/4, 1, 40, 5, 100);
             for (int i=0; i<3; i++) {
-                enemies.push(new Enemy(size*(i+1)/4, size/4, 100, i+1, 10, 5, 100)); // x, y, level, type, attackstat, defence stat, max hp
+                enemies.push(new Rock()); // x, y, level, type, attackstat, defence stat, max hp
             }
 
             buttons[0] = new AttackButton("Rock", 5, size-55, 1); // add three buttons one of each type
