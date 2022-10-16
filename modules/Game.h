@@ -41,11 +41,6 @@ class Game {
             if (enemies.size() == 0) {
                 this->reset();
             }
-
-            // load font
-            // if (!font.loadFromFile("courbd.ttf")) {
-            //     std::cout << "Font not loading" << std::endl;
-            // }
         }
         void save() {
             outdata.open("test.txt");

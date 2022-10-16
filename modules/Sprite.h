@@ -65,40 +65,26 @@ protected:
             this->HP = atributes[7];
         }
 
-        void drawBody(int x, int y, sf::Color color) { // draws the sprite based of its atributes
-            position[0], position[1] = x, y; //poistion
-
-            body = new sf::CircleShape();
-            body->setRadius(10);
-            body->setPosition(x,y);
-            body->setFillColor(color);
-            body->setOrigin(5,5);
-
-            HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5)); // draw health bar
-            HP_bar->setFillColor(sf::Color::Green);
-            HP_bar->setPosition(x-10,y-15);
-        }
+        virtual void drawBody(int x, int y, sf::Color color) = 0;
         sf::CircleShape *getBody() { return body; }
         sf::RectangleShape *getHPBar() { return HP_bar; }
         // render the image in window
-        void draw(sf::RenderWindow *win) {
-            win->draw(*body);
-            win->draw(*HP_bar);
-        }
+        virtual void draw(sf::RenderWindow *win) = 0;
 
         void fight(Sprite *target, int attackType) { // fight function
-
-            //std::cout << "Prev: " << target->HP << std::endl; // print health to console
-
             // calculate the damage and apply it to the target
             target->HP -= damageCalculator(this->attack+this->level, target->defence+target->level, target->type, attackType);
-            
-            //std::cout << "After: " << target->HP << std::endl;  // print health to console
+            // if hp < 0 then hp = 0
+            if (target->HP < 0) {target->HP = 0;}
             // change target's HP bar size
             target->changeHPBar(target->HP);
         }
         void lvlUp() { // increments the level of the sprite
             level++;
+        }
+        void setPosition(int x, int y) {
+            this->position[0] = x;
+            this->position[1] = y;
         }
         void heal(int amount) { // heals the sprite but stays below the max hp level
             HP += amount;

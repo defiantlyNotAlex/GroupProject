@@ -25,7 +25,7 @@ class AttackButton {
             }
             text = new sf::Text();
             text->setFont(font);
-            text->setCharacterSize(15);
+            text->setCharacterSize(12);
             text->setString(type);
             text->setFillColor(sf::Color::Red);
             text->setPosition(x, y+20);

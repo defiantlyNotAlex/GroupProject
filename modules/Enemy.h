@@ -2,7 +2,7 @@
 #define ENEMY_H
 #include <SFML/Graphics.hpp>
 #include "Sprite.h"
-
+#include <iostream>
 class Enemy: public Sprite {
     private:
         sf::Font font;
@@ -20,6 +20,7 @@ class Enemy: public Sprite {
             typing = 0;
         }
         void drawBody(int x, int y, sf::Color color) {
+            setPosition(x, y);
             body = new sf::CircleShape();
             body->setRadius(10);
             body->setPosition(x,y);
@@ -45,6 +46,9 @@ class Enemy: public Sprite {
                     break;
                 case 3:
                     text->setString("Scissor");
+                    break;
+                default:
+                    text->setString("No type");
                     break;
             }
             text->setFillColor(sf::Color::Red);
