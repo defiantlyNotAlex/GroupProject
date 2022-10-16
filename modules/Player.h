@@ -3,12 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include "Sprite.h"
 #include <string>
+#include <sstream>
+#include <iostream>
 class Player: public Sprite {
     private:
-        int playerLvl;
-        int playerAttack;
-        int playerDefence;
-
         sf::Font font;
         sf::Text* text;
 
@@ -16,7 +14,7 @@ class Player: public Sprite {
         // constructor with variables
         Player(int x, int y, int lvl, int attack, int defence, int HPcapacity): Sprite(lvl, attack, defence, 0, HPcapacity) {
             drawBody(x, y, sf::Color::Green);
-            playerLvl = lvl;
+            printStats();
         }
         void drawBody(int x, int y, sf::Color color) { // draws the sprite based of its atributes
             setPosition(x, y);
@@ -31,22 +29,32 @@ class Player: public Sprite {
             HP_bar->setFillColor(sf::Color::Green);
             HP_bar->setPosition(x-10,y-15);
         }
+        void printStats() {
+            int* attributes = saveAtributes();
+            if (!font.loadFromFile("fonts/courbd.ttf")) {
+                std::cout << "Font not loading" << std::endl;
+            }
+            text = new sf::Text();
+            text->setFont(font);
+            text->setCharacterSize(12);
+            std::stringstream formatText;
+            formatText << "LVL: " << attributes[2] << "\nATK: " << attributes[3] << "\nDEF: " << attributes[4];
+            text->setString(formatText.str());
+            text->setFillColor(sf::Color::Red);
+            text->setPosition(400,450);
+        }
+        void changePrintStats() {
+            int* attributes = saveAtributes();
+            std::stringstream formatText;
+            formatText << "LVL: " << attributes[2] << "\nATK: " << attributes[3] << "\nDEF: " << attributes[4];
+            text->setString(formatText.str());
+        }
         void draw(sf::RenderWindow* win) {
             win->draw(*body);
             win->draw(*HP_bar);
+            win->draw(*text);
         }
-        // void printStats() {
-        //     if (!font.loadFromFile("fonts/courbd.ttf")) {
-        //         std::cout << "Font not loading" << std::endl;
-        //     }
-        //     text = new sf::Text();
-        //     text->setFont(font);
-        //     text->setCharacterSize(12);
-        //     std::string formatText = "LVL" + playerLvl;
-        //     text->setString(formatText);
-        //     text->setFillColor(sf::Color::Red);
-        //     text->setPosition(0,0);
-        // }
+        
         ~Player() {}
 };
 #endif

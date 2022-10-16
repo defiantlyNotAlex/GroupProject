@@ -88,6 +88,7 @@ class Game {
             }
             
             player->loadAtributes(atributes);
+            player->changePrintStats();
             // load enemy attributes
             while (getline(MyReadFile, line)) {
                 int j = 0;
@@ -137,6 +138,7 @@ class Game {
                             cout << "YOU WIN" << endl;
                             this->reset();
                         }
+                        player->changePrintStats();
                     }
                     if (!player->isAlive()) {
                         cout << "YOU LOSE" << endl;

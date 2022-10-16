@@ -16,9 +16,9 @@ class Sprite {
         int type;
         int HPcapacity; // max HP of a character
         int HP;
-protected:
-    sf::CircleShape* body;
-    sf::RectangleShape* HP_bar;
+    protected:
+        sf::CircleShape* body;
+        sf::RectangleShape* HP_bar;
     public:
         // default constructor
         Sprite() {
@@ -40,7 +40,8 @@ protected:
             exp = 0;
             HP = HPcapacity;
         }
-        int* saveAtributes() { //x, y, level, attack, defence, type, maxHP, HP
+        //x, y, level, attack, defence, type, maxHP, HP
+        int* saveAtributes() { 
             // returns the attributes of the sprite 
             int* returnArray = new int[8];
             returnArray[0] = this->position[0];
@@ -53,7 +54,7 @@ protected:
             returnArray[7] = this->HP;
             return returnArray;
         }
-
+        //x, y, level, attack, defence, type, maxHP, HP
         void loadAtributes(int* atributes) {
             this->position[0] = atributes[0];
             this->position[1] = atributes[1];
@@ -66,8 +67,6 @@ protected:
         }
 
         virtual void drawBody(int x, int y, sf::Color color) = 0;
-        sf::CircleShape *getBody() { return body; }
-        sf::RectangleShape *getHPBar() { return HP_bar; }
         // render the image in window
         virtual void draw(sf::RenderWindow *win) = 0;
 
@@ -86,6 +85,8 @@ protected:
             this->position[0] = x;
             this->position[1] = y;
         }
+        sf::CircleShape *getBody() { return body; }
+        sf::RectangleShape *getHPBar() { return HP_bar; }
         void heal(int amount) { // heals the sprite but stays below the max hp level
             HP += amount;
             if (HP > HPcapacity + level) {
@@ -99,15 +100,9 @@ protected:
             }
             return true;
         }
-        // get the x, y position of the character
-        int* getPosition() {
-            return position;
-        }
-
         // HP bar change according to current HP
         void changeHPBar(int currentHP) {
             float proportion = (1.0 * currentHP) / (1.0 * HPcapacity);
-           //std::cout << proportion << "/" << currentHP << "/" << HPcapacity << std::endl;
             this->HP_bar->setScale(proportion, 1);
         } 
         ~Sprite() {
