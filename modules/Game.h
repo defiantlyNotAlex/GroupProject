@@ -27,17 +27,27 @@ class Game {
         std::stack <Enemy*> enemies;  
         // enemies declared as a stack so that dead enemies can be easily removed and new enemies added easily
         AttackButton *buttons[3];
-        // sf::Font font;
+        sf::Font font;
+        sf::Text *buttonTxt;
     public:
         // constructor and initialize objects inside this
         Game(int size, std::string title) {
             window = new RenderWindow(VideoMode(size, size), title);
             player = new Player(size/2, size*3/4, 1, 40, 5, 100);
             
-
             buttons[0] = new AttackButton("Rock", 5, size-55, 1); // add three buttons one of each type
             buttons[1] = new AttackButton("Paper", 65, size-55, 2);
             buttons[2] = new AttackButton("Scissor", 125, size-55, 3);
+
+            if (!font.loadFromFile("fonts/courbd.ttf")) {
+                std::cout << "Font not loading" << std::endl;
+            }
+            buttonTxt = new sf::Text();
+            buttonTxt->setFont(font);
+            buttonTxt->setCharacterSize(12);
+            buttonTxt->setString("Hit buttons to attack");
+            buttonTxt->setFillColor(sf::Color::Red);
+            buttonTxt->setPosition(10, size-70);
 
             this->load();
             if (enemies.size() == 0) {
@@ -188,6 +198,7 @@ class Game {
                     buttons[i]->draw(window);
                 }
                 enemies.top()->draw(window); // only draw the active enemy
+                window->draw(*buttonTxt);
 
                 // display window
                 window->display();

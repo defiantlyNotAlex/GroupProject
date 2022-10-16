@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
-
 class AttackButton {
     private:
         sf::RectangleShape *body;
@@ -29,7 +28,6 @@ class AttackButton {
             text->setString(type);
             text->setFillColor(sf::Color::Red);
             text->setPosition(x, y+20);
-            // stuff for renderign
 
             // variables needed for functionality
             position = sf::Vector2i(x, y); // position stores the x, y value of the top right of the button
