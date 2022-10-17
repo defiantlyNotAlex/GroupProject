@@ -138,6 +138,7 @@ class Game {
         }
         // run game
         void run() {
+            int num=0; //Add turn of player count
             while (window->isOpen()) {
                 Event e;
                 // all events happen inside this while loop
@@ -178,6 +179,9 @@ class Game {
                                 player->fight(enemies.top(), buttons[i]->attackType); // the player attacks the enemy using the type from the button
 
                                 enemies.top()->fight(player, enemies.top()->typing); // the enemy does its turn attacking the player
+
+                                num++; 
+                                player->playerturn(num); //Player attacking enemy turn num+1
 
                             }
                         }
