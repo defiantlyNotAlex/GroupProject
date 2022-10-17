@@ -1,3 +1,4 @@
+// calculate damage based on attack types
 int damageCalculator(int attackStat, int defenceStat, int type1, int type2)
 { // type 1 is defender type 2 is attacker
     int damageMultiplier = 1;

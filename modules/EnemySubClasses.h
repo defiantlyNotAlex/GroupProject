@@ -4,7 +4,7 @@
 #include "Enemy.h"
 int const x = 250;
 int const y = 60;
-
+// Rock Enemy
 class Rock : public Enemy {
     // private:
 
@@ -16,6 +16,7 @@ public:
         typing = 1;
     }
 };
+// Paper Enemy
 class Paper : public Enemy {
     // private:
 
@@ -27,6 +28,7 @@ public:
         typing = 2;
     }
 };
+// Scissor Enemy
 class Scissor : public Enemy {
     // private:
 

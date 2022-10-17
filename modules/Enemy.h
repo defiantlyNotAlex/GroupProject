@@ -14,28 +14,20 @@ class Enemy: public Sprite {
         Enemy(int x, int y, int lvl, int type, int attack, int defence, int HPcapacity, sf::Color color): Sprite(lvl, attack, defence, type, HPcapacity) {
             typing = type;
             drawBody(x, y, color); 
-            setHPText();
+            drawHPBar(x-10, y-15, sf::Color::Red);
+            drawHPText();
+            drawTypeText(x, y+20);
         }
+        // constructor with different parameters
         Enemy(int x, int y, sf::Color color) {
             typing = 0;
             drawBody(x, y, color);
-            setHPText();
+            drawHPBar(x-10, y-15, sf::Color::Red);
+            drawHPText();
+            drawTypeText(x, y+20);
         }
-        void drawBody(int x, int y, sf::Color color) {
-            setPosition(x, y);
-            body = new sf::CircleShape();
-            body->setRadius(10);
-            body->setPosition(x,y);
-            body->setFillColor(color);
-            body->setOrigin(5,5);
-
-            HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5)); // draw health bar
-            HP_bar->setFillColor(sf::Color::Red);
-            HP_bar->setPosition(x-10,y-15);
-
-            setTypeText(x, y+20);
-        }
-        void setTypeText(int x, int y) {
+        // draw type text (rock/paper/scissor)
+        void drawTypeText(int x, int y) {
             if (!font.loadFromFile("fonts/courbd.ttf")) {
                 std::cout << "Font not loading" << std::endl;
             }
@@ -59,12 +51,16 @@ class Enemy: public Sprite {
             text->setFillColor(sf::Color::Red);
             text->setPosition(x, y);
         }
+        // render enemy on window
         void draw(sf::RenderWindow* win) {
             win->draw(*body);
             win->draw(*HP_bar);
             win->draw(*text);
             win->draw(*HPText);
         }
-        ~Enemy() {}
+        // destructor
+        ~Enemy() {
+            delete text;
+        }
 };
 #endif

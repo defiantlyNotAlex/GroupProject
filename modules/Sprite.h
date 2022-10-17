@@ -11,7 +11,6 @@ class Sprite {
     private:
         int position[2]; // x, y position of the sprite
         int level;
-        int exp;
         int attack;
         int defence;
         int type;
@@ -30,19 +29,17 @@ class Sprite {
             defence = 2;
             HPcapacity = 100;
             HP = 100;
-            exp = 0;
         }
         // constructor with customized level, attack, and HP capacity
         Sprite(int lvl, int attack, int defence, int type, int HPcapacity) {
-            level = lvl;
+            this->level = lvl;
             this->attack = attack;
             this->defence = defence;
             this->type = type;
             this->HPcapacity = HPcapacity;
-
-            exp = 0;
-            HP = HPcapacity;
+            this->HP = HPcapacity;
         }
+        // save player's attributes to array
         //x, y, level, attack, defence, type, maxHP, HP
         int* saveAtributes() { 
             // returns the attributes of the sprite 
@@ -57,6 +54,7 @@ class Sprite {
             returnArray[7] = this->HP;
             return returnArray;
         }
+        // load player's attributes from array
         //x, y, level, attack, defence, type, maxHP, HP
         void loadAtributes(int* atributes) {
             this->position[0] = atributes[0];
@@ -68,9 +66,22 @@ class Sprite {
             this->HPcapacity = atributes[6];
             this->HP = atributes[7];
         }
-        // draw appearance of the character
-        virtual void drawBody(int x, int y, sf::Color color) = 0;
-        // render the image in window
+        // draw body
+        void drawBody(int x, int y, sf::Color color) {
+            setPosition(x, y);
+            body = new sf::CircleShape();
+            body->setRadius(10);
+            body->setPosition(x,y);
+            body->setFillColor(color);
+            body->setOrigin(5,5);
+        }
+        // draw HP bar
+        void drawHPBar(int x, int y, sf::Color color) {
+            HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5)); // draw health bar
+            HP_bar->setFillColor(color);
+            HP_bar->setPosition(x,y);
+        }
+        // render the image in window - abstract class
         virtual void draw(sf::RenderWindow *win) = 0;
         // fight function
         void fight(Sprite *target, int attackType) {
@@ -125,7 +136,7 @@ class Sprite {
             changeHPText();
         }
         // display text to show the amount of HP lost
-        void setHPText() {
+        void drawHPText() {
             if (!font.loadFromFile("fonts/courbd.ttf")) {
                 std::cout << "Font not loading" << std::endl;
             }
@@ -138,6 +149,7 @@ class Sprite {
             HPText->setFillColor(sf::Color::Red);
             HPText->setPosition(position[0]+50, position[1]-15);
         }
+        // change HP text when HP changes
         void changeHPText() {
             std::stringstream formatText;
             formatText << HP << "/" << HPcapacity;

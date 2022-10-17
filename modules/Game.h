@@ -13,7 +13,6 @@
 #include <cstdlib>
 #include "EnemySubClasses.h"
 
-
 using namespace std;
 using std::ofstream;
 using namespace sf;
@@ -34,7 +33,7 @@ class Game {
         Game(int size, std::string title) {
             window = new RenderWindow(VideoMode(size, size), title);
             player = new Player(size/2, size*3/4, 1, 40, 5, 100);
-            
+            // attack buttons
             buttons[0] = new AttackButton("Rock", 5, size-55, 1); // add three buttons one of each type
             buttons[1] = new AttackButton("Paper", 65, size-55, 2);
             buttons[2] = new AttackButton("Scissor", 125, size-55, 3);
@@ -54,6 +53,7 @@ class Game {
                 this->reset();
             }
         }
+        // save game data in text file
         void save() {
             outdata.open("test.txt");
             if (!outdata) { // file couldn't be opened
@@ -80,6 +80,7 @@ class Game {
 
             outdata.close();
         }
+        // load game data from text file
         void load() {
             // load player attributes
             ifstream MyReadFile("test.txt");
@@ -98,10 +99,10 @@ class Game {
                 j++;
                 atributes[i] = stoi(segment);
             }
-            
             player->loadAtributes(atributes);
             player->changePrintStats();
             player->changeHPBar();
+
             // load enemy attributes
             while (getline(MyReadFile, line)) {
                 int j = 0;
@@ -123,6 +124,7 @@ class Game {
                 this->reset();
             }
         }
+        // reset/restart game
         void reset() {
             player->reset();
             while (!enemies.empty())
@@ -134,6 +136,7 @@ class Game {
             }
             player->changeHPBar();
         }
+        // run game
         void run() {
             while (window->isOpen()) {
                 Event e;
@@ -203,6 +206,7 @@ class Game {
                 window->display();
             }
         }
+        // destructor
         ~Game() {
             delete window;
             delete player;

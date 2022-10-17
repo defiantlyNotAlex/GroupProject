@@ -14,22 +14,11 @@ class Player: public Sprite {
         // constructor with variables
         Player(int x, int y, int lvl, int attack, int defence, int HPcapacity): Sprite(lvl, attack, defence, 0, HPcapacity) {
             drawBody(x, y, sf::Color::Green);
+            drawHPBar(x-10, y-15, sf::Color::Green);
             printStats();
-            setHPText();
+            drawHPText();
         }
-        void drawBody(int x, int y, sf::Color color) { // draws the sprite based of its atributes
-            setPosition(x, y);
-
-            body = new sf::CircleShape();
-            body->setRadius(10);
-            body->setPosition(x,y);
-            body->setFillColor(color);
-            body->setOrigin(5,5);
-
-            HP_bar = new sf::RectangleShape(sf::Vector2f(50, 5)); // draw health bar
-            HP_bar->setFillColor(sf::Color::Green);
-            HP_bar->setPosition(x-10,y-15);
-        }
+        // print player statistics
         void printStats() {
             int* attributes = saveAtributes();
             if (!font.loadFromFile("fonts/courbd.ttf")) {
@@ -44,22 +33,28 @@ class Player: public Sprite {
             text->setFillColor(sf::Color::Red);
             text->setPosition(400,450);
         }
+        // change player's statistic on screen
         void changePrintStats() {
             int* attributes = saveAtributes();
             std::stringstream formatText;
             formatText << "LVL: " << attributes[2] << "\nATK: " << attributes[3] << "\nDEF: " << attributes[4];
             text->setString(formatText.str());
         }
+        // reset player's attributes
         void reset() {
             int newAttributes[8] = { 0, 250, 1, 50, 10, 0, 100, 100 };
             loadAtributes(newAttributes);
         }
+        // render player on window
         void draw(sf::RenderWindow* win) {
             win->draw(*body);
             win->draw(*HP_bar);
             win->draw(*text);
             win->draw(*HPText);
         }
-        ~Player() {}
+        // destructor
+        ~Player() {
+            delete text;
+        }
 };
 #endif
