@@ -117,7 +117,17 @@ class Game {
                     j++;
                     atributes[i] = stoi(segment);
                 }
-                enemies.push(new Enemy(atributes[0], atributes[1], atributes[2], atributes[5], atributes[3], atributes[4], atributes[6], sf::Color::Red));
+                switch(atributes[5]) {
+                    case 1:
+                        enemies.push(new Rock());
+                        break;
+                    case 2:
+                        enemies.push(new Paper());
+                        break;
+                    case 3:
+                        enemies.push(new Scissor());
+                        break;
+                }
                 enemies.top()->loadAtributes(atributes);
                 enemies.top()->hp->changeHPBar();
             }
