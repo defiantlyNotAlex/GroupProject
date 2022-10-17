@@ -28,6 +28,7 @@ class Game {
         AttackButton *buttons[3];
         sf::Font font;
         sf::Text *buttonTxt;
+        sf::Text *gameResult;
     public:
         // constructor and initialize objects inside this
         Game(int size, std::string title) {
@@ -47,7 +48,7 @@ class Game {
             buttonTxt->setString("Hit buttons to attack");
             buttonTxt->setFillColor(sf::Color::Red);
             buttonTxt->setPosition(10, size-70);
-
+            // load saved game data
             this->load();
             if (enemies.size() == 0) {
                 this->reset();
@@ -101,7 +102,7 @@ class Game {
             }
             player->loadAtributes(atributes);
             player->changePrintStats();
-            player->changeHPBar();
+            player->hp->changeHPBar();
 
             // load enemy attributes
             while (getline(MyReadFile, line)) {
@@ -118,7 +119,7 @@ class Game {
                 }
                 enemies.push(new Enemy(atributes[0], atributes[1], atributes[2], atributes[5], atributes[3], atributes[4], atributes[6], sf::Color::Red));
                 enemies.top()->loadAtributes(atributes);
-                enemies.top()->changeHPBar();
+                enemies.top()->hp->changeHPBar();
             }
             if (enemies.size() == 0) {
                 this->reset();
@@ -134,7 +135,7 @@ class Game {
                 enemies.push(new Paper());
                 enemies.push(new Scissor());
             }
-            player->changeHPBar();
+            player->hp->changeHPBar();
         }
         // run game
         void run() {
@@ -155,6 +156,7 @@ class Game {
                         if (enemies.empty()) {
                             this->reset();
                             cout << "YOU WIN" << endl;
+                            cout << "GAME RESET" << endl;
                         }
                         player->changePrintStats();
                     }
