@@ -1,18 +1,17 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
-#include "Sprite.h"
+#include "Character.h"
 #include <string>
 #include <sstream>
 #include <iostream>
-class Player: public Sprite {
+class Player: public Character {
     private:
-        sf::Font font;
         sf::Text* text;
 
     public:
         // constructor with variables: x, y, lvl, atk, def, HP capacity
-        Player(int x, int y, int lvl, int attack, int defence, int HPcapacity): Sprite(lvl, attack, defence, 0, HPcapacity) {
+        Player(int x, int y, int lvl, int attack, int defence, int HPcapacity): Character(lvl, attack, defence, 0, HPcapacity) {
             drawBody(x, y, sf::Color::Green);
             hp->drawHPBar(x-10, y-15, sf::Color::Green);
             printStats();
@@ -22,9 +21,6 @@ class Player: public Sprite {
         // print player statistics
         void printStats() {
             int* attributes = saveAtributes();
-            if (!font.loadFromFile("fonts/courbd.ttf")) {
-                std::cout << "Font not loading" << std::endl;
-            }
             text = new sf::Text();
             text->setFont(font);
             text->setCharacterSize(12);

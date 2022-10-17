@@ -1,16 +1,15 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 #include <SFML/Graphics.hpp>
-#include "Sprite.h"
+#include "Character.h"
 #include <iostream>
-class Enemy: public Sprite {
+class Enemy: public Character {
     private:
-        sf::Font font;
     public:
         int typing; // public variable for attacks
 
         // constructor with variables: x, y, lvl, type, atk, def, HP capacity, color
-        Enemy(int x, int y, int lvl, int type, int attack, int defence, int HPcapacity, sf::Color color): Sprite(lvl, attack, defence, type, HPcapacity) {
+        Enemy(int x, int y, int lvl, int type, int attack, int defence, int HPcapacity, sf::Color color): Character(lvl, attack, defence, type, HPcapacity) {
             typing = type;
             drawBody(x, y, color); 
             hp->drawHPBar(x-10, y-15, sf::Color::Red);
@@ -19,9 +18,6 @@ class Enemy: public Sprite {
         }
         // draw type typeText (rock/paper/scissor)
         void drawTypeText(int x, int y) {
-            if (!font.loadFromFile("fonts/courbd.ttf")) {
-                std::cout << "Font not loading" << std::endl;
-            }
             typeText = new sf::Text();
             typeText->setFont(font);
             typeText->setCharacterSize(15);
